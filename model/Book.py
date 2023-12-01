@@ -10,6 +10,7 @@ class Book:
 		self.author = author
 		self.cover = cover
 		self.description = description
+		
 
 	@property
 	def author(self):

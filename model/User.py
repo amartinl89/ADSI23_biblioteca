@@ -39,3 +39,6 @@ class User:
 
 	def delete_session(self, session_hash):
 		db.delete("DELETE FROM Session WHERE session_hash = ? AND user_id = ?", (session_hash, self.id))
+	
+	def enviarSolicitud(nombre):
+		raise NotImplemented("HACER")
