@@ -16,3 +16,5 @@ class BaseTestClass(unittest.TestCase):
 			email=email,
 			password=password
 		))
+	
+    
