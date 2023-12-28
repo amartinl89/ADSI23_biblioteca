@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Historial de Reservas para {{ request.user.username }}</h2>
+
+  {% if historial %}
+    <table>
+      <thead>
+        <tr>
+          <th>Titulo del Libro</th>
+          <th>Fecha de Reserva</th>
+          <th>Fecha de Devolución</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reserva in historial %}
+          <tr>
+            <td><a href="{{ url_for('resena', idLibro=reserva.idLibro, titulo=reserva.titulo) }}">{{ reserva.titulo }}</a></td>
+            <td>{{ reserva.fechaHoraReserva }}</td>
+            <td>{{ reserva.fechaDevolucion }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No hay reservas en el historial.</p>
+  {% endif %}
+{% endblock %}

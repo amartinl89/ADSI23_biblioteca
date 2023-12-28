@@ -59,6 +59,7 @@ for user in usuarios:
 	con.commit()
 
 
+
 #### Insert books
 with open('libros.tsv', 'r') as f:
 	libros = [x.split("\t") for x in f.readlines()]

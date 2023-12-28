@@ -1,5 +1,6 @@
-from model import Connection, Book, User
+from model import Connection, Book, User, Reseña, Reserva
 from model.tools import hash_password
+import json
 db = Connection()
 
 class LibraryController:
@@ -57,7 +58,12 @@ class LibraryController:
         raise NotImplemented("HACER")
     
     def getHistorial(self, idUsuario):
-        raise NotImplemented("HACER")
+        consulta = db.select("SELECT Book.title, Reserva.fechaHoraReserva, Reserva.fechaDevolucion, Reserva.idLibro FROM Reserva JOIN Book ON Reserva.idLibro = Book.id WHERE Reserva.idUsuario == ?",(idUsuario,))
+        if len(consulta) > 0:
+            historial=[{"titulo":h[0], "fechaHoraReserva":h[1], "fechaDevolucion":h[2], "idLibro":h[3]} for h in consulta]
+            return historial
+        else:
+            return None
     
     def cancelarReserva(self, idUsuario, idLibrom, fechaHoraReserva):
         raise NotImplemented("HACER")
@@ -83,14 +89,26 @@ class LibraryController:
     
 	#GESTOR RESEÑAS
     def getReseñasUsuario(self,idUsuario, idLibro):
-        raise NotImplemented("HACER")
+        consulta = db.select("SELECT Reseña, Puntuacion FROM Reseña WHERE idUsuario= ? AND idLibro= ?",(idUsuario,idLibro,))
+        print(consulta)
+        #print(consulta[0][0])
+        if len(consulta) > 0:
+            resena = {"reseña": consulta[0][0], "puntuacion": consulta[0][1] if len(consulta[0]) > 1 else None}
+            return resena
+        else:
+            return None
     
-    def escribirReseña(self, idUsuario, idLibro, reseña, punt):
-        raise NotImplemented("HACER")
-    
+    def escribirReseña(self, idUsuario, idLibro, reseña, punt): 
+        db.insert("INSERT INTO Reseña (idUsuario, idLibro, reseña, puntuacion) VALUES (?, ?, ?, ?)", (idUsuario, idLibro, reseña, punt))
+        print(reseña)
     def modificarReseña(self, idUsuario, idLibro, reseña, punt):
-        raise NotImplemented("HACER")
-    
+        db.update("UPDATE Reseña SET idUsuario= ? , idLibro= ?, reseña = ?, puntuacion= ?" +
+                             " WHERE idUsuario= ? AND idLibro= ?",(idUsuario,idLibro, reseña, punt, idUsuario, idLibro,))
+
+    def comprobarReseña(self, idUsuario, idLibro):
+        consulta = db.select("SELECT * FROM Reseña WHERE idUsuario = ? AND idLibro = ?", (idUsuario, idLibro,))
+        return len(consulta)
+
 	#GESTOR USUARIOS
     def buscarUsuario(self, nombre):
         raise NotImplemented("HACER")
