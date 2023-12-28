@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% if resena.puntuacion != Null %}
+    <h2>Modificar Reseña para {{ libro.titulo }}</h2>
+
+    {% else %}
+    <h2>Escribir Reseña para {{ libro.titulo }}</h2>
+    {% endif %}
+    <form id="resenaForm" method="post" action="{{ url_for('guardarResena', idLibro=libro.idLibro, titulo=libro.titulo) }}" onsubmit="return validarResena()">
+      <input type="hidden" name="nuevaResenaH" value="{{ resena.reseña }}">
+      <label for="nuevaResena">Reseña:</label>
+      <textarea id="nuevaResena" name="nuevaResena" rows="4" cols="50">{{ resena.reseña }}</textarea>
+
+      <label for="nuevaPuntuacion">Puntuación (1-10):</label>
+      <input type="number" id="nuevaPuntuacion" name="nuevaPuntuacion" min="1" max="10" value="{{ resena.puntuacion }}">
+
+      <button type="submit">Guardar Cambios</button>
+    </form>
+    <script>
+      var valoresPermitidos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+      function validarResena() {
+        var nuevaResena = document.getElementById('nuevaResena').value;
+        var nuevaPuntuacion = document.getElementById('nuevaPuntuacion').value;
+
+        if (!nuevaResena.trim() || isNaN(nuevaPuntuacion) || !valoresPermitidos.includes(parseInt(nuevaPuntuacion))) {
+          alert('La reseña no puede estar vacía y la puntuación debe ser uno de los valores permitidos (1-10).');
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+  
+{% endblock %}
