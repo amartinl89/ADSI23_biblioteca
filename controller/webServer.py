@@ -42,6 +42,41 @@ def catalogue():
 	return render_template('catalogue.html', books=books, title=title, author=author, current_page=page,
 	                       total_pages=total_pages, max=max, min=min)
 
+@app.route('/historial')
+def historial():
+	usuarioId = request.user.id
+	historial = library.getHistorial(usuarioId)
+	return render_template('historial.html', historial = historial)
+@app.route('/reseña')
+def resena():
+	idLibro = request.values.get('idLibro')
+	titulo = request.values.get("titulo")
+	libro = {"titulo":titulo, "idLibro": idLibro}
+	usuarioId = request.user.id
+	resena = library.getReseñasUsuario(idUsuario=usuarioId, idLibro=idLibro)
+	return render_template('reseña.html', resena = resena, libro=libro)
+@app.route('/reseña', methods=['POST'])
+def guardarResena():
+	idLibro = request.values.get('idLibro')
+	titulo = request.values.get("titulo")
+	nuevaPuntuacion = request.form.get('nuevaPuntuacion')
+	print(request.form.get('nuevaResena'))
+	print(request.values.get('resena.puntuacion'))
+	if(library.comprobarReseña(idUsuario=request.user.id, idLibro=idLibro)>0):
+		library.modificarReseña(idUsuario=request.user.id, idLibro=idLibro, reseña=request.form.get('nuevaResena'), punt=nuevaPuntuacion)
+	else:
+		print("Prueba")
+		library.escribirReseña(idUsuario=request.user.id, idLibro=idLibro, reseña=request.form.get('nuevaResena'), punt=nuevaPuntuacion)
+	historial = library.getHistorial(idUsuario=request.user.id)
+	return render_template('historial.html', historial = historial)
+@app.route('/escribirReseña')
+def escribirResena():
+	idLibro = request.values.get('idLibro')
+	titulo = request.values.get("titulo")
+	libro = {"titulo":titulo, "idLibro": idLibro}
+	usuarioId = request.user.id
+	resena = library.getReseñasUsuario(idUsuario=usuarioId, idLibro=idLibro)
+	return render_template('escribirReseña.html', resena = resena, libro=libro)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

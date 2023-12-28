@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Reseña para {{libro.titulo}}</h2>
+
+  {% if resena %}
+    <div class="reseña">
+      <p>{{ resena.reseña }}</p>
+      <p>Puntuación: {{ resena.puntuacion }} /10</p>
+      <button class="modificar-reseña-btn"><a href="{{ url_for('escribirResena', idLibro=libro.idLibro, titulo=libro.titulo, resena={'reseña':resena.reseña, 'puntuacion':resena.puntuacion}) }}">Modificar Reseña</a></button>
+    </div>
+  {% else %}
+    <p>No se ha escrito ninguna reseña para este libro.</p>
+    <button class="escribir-reseña-btn"><a href="{{ url_for('escribirResena', idLibro=libro.idLibro, titulo=libro.titulo,resena={'reseña':resena.reseña, 'puntuacion':resena.puntuacion}) }}">Escribir Reseña</a></button>
+  {% endif %}
+  {% endblock %}
