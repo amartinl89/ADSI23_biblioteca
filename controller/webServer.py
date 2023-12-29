@@ -60,12 +60,9 @@ def guardarResena():
 	idLibro = request.values.get('idLibro')
 	titulo = request.values.get("titulo")
 	nuevaPuntuacion = request.form.get('nuevaPuntuacion')
-	print(request.form.get('nuevaResena'))
-	print(request.values.get('resena.puntuacion'))
 	if(library.comprobarReseña(idUsuario=request.user.id, idLibro=idLibro)>0):
 		library.modificarReseña(idUsuario=request.user.id, idLibro=idLibro, reseña=request.form.get('nuevaResena'), punt=nuevaPuntuacion)
 	else:
-		print("Prueba")
 		library.escribirReseña(idUsuario=request.user.id, idLibro=idLibro, reseña=request.form.get('nuevaResena'), punt=nuevaPuntuacion)
 	historial = library.getHistorial(idUsuario=request.user.id)
 	return render_template('historial.html', historial = historial)
