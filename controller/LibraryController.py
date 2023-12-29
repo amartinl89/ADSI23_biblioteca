@@ -90,7 +90,6 @@ class LibraryController:
 	#GESTOR RESEÑAS
     def getReseñasUsuario(self,idUsuario, idLibro):
         consulta = db.select("SELECT Reseña, Puntuacion FROM Reseña WHERE idUsuario= ? AND idLibro= ?",(idUsuario,idLibro,))
-        print(consulta)
         #print(consulta[0][0])
         if len(consulta) > 0:
             resena = {"reseña": consulta[0][0], "puntuacion": consulta[0][1] if len(consulta[0]) > 1 else None}
@@ -100,7 +99,6 @@ class LibraryController:
     
     def escribirReseña(self, idUsuario, idLibro, reseña, punt): 
         db.insert("INSERT INTO Reseña (idUsuario, idLibro, reseña, puntuacion) VALUES (?, ?, ?, ?)", (idUsuario, idLibro, reseña, punt))
-        print(reseña)
     def modificarReseña(self, idUsuario, idLibro, reseña, punt):
         db.update("UPDATE Reseña SET idUsuario= ? , idLibro= ?, reseña = ?, puntuacion= ?" +
                              " WHERE idUsuario= ? AND idLibro= ?",(idUsuario,idLibro, reseña, punt, idUsuario, idLibro,))
