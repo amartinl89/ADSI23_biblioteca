@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOROS - Ver Hilos</title>
+</head>
+<body>
+    <h1>FOROS - Ver Hilos</h1>
+    <ul>
+        {% for hilo in hilos %}
+            <li>{{ hilo.texto }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
