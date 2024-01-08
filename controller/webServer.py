@@ -1,10 +1,11 @@
-from .LibraryController import LibraryController
+from .LibraryController import LibraryController, GestorForos
 from flask import Flask, render_template, request, make_response, redirect
 
 app = Flask(__name__, static_url_path='', static_folder='../view/static', template_folder='../view/')
 
 
 library = LibraryController()
+gestor_foros = GestorForos()
 
 
 @app.before_request
@@ -105,3 +106,39 @@ def logout():
 		request.user.delete_session(request.user.token)
 		request.user = None
 	return resp
+
+def es_nombre_valido(nombre):
+    palabras_prohibidas = ["racista", "sexista"]
+    return all(palabra.lower() not in nombre.lower() for palabra in palabras_prohibidas)
+
+@app.route('/foros')
+def lista_foros():
+    temas = library.get_temas()
+    return render_template('foro_lista.html', temas=temas)
+
+temas = library.get_temas()
+@app.route('/nuevo_tema', methods=['GET', 'POST'])
+def nuevo_tema():
+    if request.method == 'POST':
+        nombre = request.form.get('nombre')
+        if nombre and es_nombre_valido(nombre):
+            tema_existente = next((tema for tema in temas if tema.nombre.lower() == nombre.lower()), None)
+            if tema_existente:
+                return render_template('nuevo_tema.html', error="El tema ya existe.")
+            else:
+                library.crear_tema(nombre)
+                temas = library.get_temas()  # Actualiza la lista de temas después de crear uno nuevo
+                return render_template('foro_lista.html', temas=temas)
+        else:
+            return render_template('nuevo_tema.html', error="Nombre de tema no válido.")
+    return render_template('nuevo_tema.html')
+
+@app.route('/explorar_temas')
+def explorar_temas():
+    temas = library.get_temas()
+    return render_template('explorar_temas.html', temas=temas)
+
+@app.route('/tema/<int:id_tema>')
+def ver_hilos(id_tema):
+    hilos = library.get_hilos(id_tema)
+    return render_template('ver_hilos.html', hilos=hilos)
