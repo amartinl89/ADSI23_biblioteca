@@ -29,9 +29,15 @@ def add_cookies(response):
 	return response
 
 
+# ...
+
 @app.route('/')
 def index():
-	return render_template('index.html')
+    temas = library.get_temas()  # Asegúrate de que esta función exista en tu LibraryController
+    return render_template('index.html', temas=temas)
+
+# ...
+
 
 
 @app.route('/catalogue')
@@ -115,31 +121,37 @@ def es_nombre_valido(nombre):
 @app.route('/foros')
 def lista_foros():
     temas = library.get_temas()
-    return render_template('foro_lista.html', temas=temas)
+    return render_template('foros.html', temas=temas)
 
 temas = library.get_temas()
 @app.route('/nuevo_tema', methods=['GET', 'POST'])
 def nuevo_tema():
+    temas = library.get_temas()  # Recupera la lista de temas existentes
+
     if request.method == 'POST':
         nombre = request.form.get('nombre')
         if nombre and es_nombre_valido(nombre):
-            tema_existente = next((tema for tema in temas if tema.nombre.lower() == nombre.lower()), None)
-            if tema_existente:
-                return render_template('nuevo_tema.html', error="El tema ya existe.")
-            else:
-                library.crear_tema(nombre)
-                temas = library.get_temas()  # Actualiza la lista de temas después de crear uno nuevo
-                return render_template('foro_lista.html', temas=temas)
-        else:
-            return render_template('nuevo_tema.html', error="Nombre de tema no válido.")
-    return render_template('nuevo_tema.html')
+            # Crea un nuevo tema utilizando el gestor de temas
+            library.crear_tema(nombre)
+            # Recupera la lista de temas después de crear uno nuevo
+            temas = library.get_temas()
+            # Después de crear el tema, redirige al usuario a la página de exploración de temas
+            return redirect('/explorar_temas')
+
+    return render_template('nuevoTema.html', temas=temas)
+
+# webServer.py
+
+# ...
 
 @app.route('/explorar_temas')
 def explorar_temas():
     temas = library.get_temas()
-    return render_template('explorar_temas.html', temas=temas)
+    return render_template('temas.html', temas=temas)
 
-@app.route('/tema/<int:id_tema>')
+# ...
+
+@app.route('/temas/<int:id_tema>')
 def ver_hilos(id_tema):
     hilos = library.get_hilos(id_tema)
-    return render_template('ver_hilos.html', hilos=hilos)
+    return render_template('verHilos.html', hilos=hilos)
