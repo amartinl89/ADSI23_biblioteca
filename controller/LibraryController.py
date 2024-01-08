@@ -82,6 +82,9 @@ class LibraryController:
     def crear_hilo(self, id_tema, texto, id_usuario):
         db.insert("INSERT INTO Hilo (id_tema, texto, id_usuario) VALUES (?, ?, ?)", (id_tema, texto, id_usuario))
 
+    def get_hilos(self, id_tema):
+        return db.select("SELECT * FROM Hilo WHERE id_tema = ?", (id_tema,))
+    
     def explorar_hilos(self, id_tema):
         hilos = db.select("SELECT id, id_tema, texto, id_usuario FROM Hilo WHERE id_tema = ?", (id_tema,))
         return [Hilo(h[0], h[1], h[2], h[3]) for h in hilos]
