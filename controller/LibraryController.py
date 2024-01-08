@@ -1,4 +1,5 @@
-from model import Connection, Book, User, Reseña, Reserva
+from model import Connection, Book, User, Reseña, Reserva, Foro
+from model.Foro import Tema, Hilo, Comentario
 from model.tools import hash_password
 import json
 db = Connection()
@@ -70,9 +71,23 @@ class LibraryController:
     def buscarReservas(self, idUsuario):
         raise NotImplemented("HACER")
     
-	#GESTOR HILOS
-    def crearComentario(self, idtema, idHilos, texto, idUser):
-        raise NotImplemented("HACER")
+    # GESTOR FOROS
+    def crear_tema(self, nombre_tema):
+        db.insert("INSERT INTO Tema (nombre) VALUES (?)", (nombre_tema,))
+
+    def get_temas(self):
+        temas = db.select("SELECT id, nombre FROM Tema")
+        return [Tema(t[0], t[1]) for t in temas]
+
+    def crear_hilo(self, id_tema, texto, id_usuario):
+        db.insert("INSERT INTO Hilo (id_tema, texto, id_usuario) VALUES (?, ?, ?)", (id_tema, texto, id_usuario))
+
+    def explorar_hilos(self, id_tema):
+        hilos = db.select("SELECT id, id_tema, texto, id_usuario FROM Hilo WHERE id_tema = ?", (id_tema,))
+        return [Hilo(h[0], h[1], h[2], h[3]) for h in hilos]
+
+    def crear_comentario(self, id_tema, id_hilo, texto, id_usuario):
+        db.insert("INSERT INTO Comentario (id_tema, id_hilo, texto, id_usuario) VALUES (?, ?, ?, ?)", (id_tema, id_hilo, texto, id_usuario))
     
 	#GESTOR LIBROS
     def getCatalogo(self):
@@ -119,4 +134,3 @@ class LibraryController:
     
     def borrarUsuario(idUsuario):
         raise NotImplemented("HACER")
-    
