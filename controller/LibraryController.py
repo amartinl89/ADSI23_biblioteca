@@ -49,10 +49,17 @@ class LibraryController:
         else:
             return None
     
+    def getBook(self, idLibro):
+        consulta = db.select("SELECT * FROM Book WHERE id = ?", (idLibro,))
+        if len(consulta) > 0:
+            libro = Book(consulta[0][0], consulta[0][1], consulta[0][2], consulta[0][3], consulta[0][4])
+            return libro
+        else:
+            return None
     
     #GESTOR RESERVAS
     def guardarReserva(self, idUsuario, idLibro, fechaHoraReserva, fechaDevolucion):
-        raise NotImplemented("HACER")
+        db.insert("INSERT INTO Reserva (idUsuario, idLibro, fechaHoraReserva, fechaDevolucion) VALUES (?, ?, ?, ?)", (idUsuario, idLibro, fechaHoraReserva, fechaDevolucion))
     
     def getReservas(self, idUsuario):
         raise NotImplemented("HACER")

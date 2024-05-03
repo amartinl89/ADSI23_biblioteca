@@ -1,5 +1,6 @@
 from .LibraryController import LibraryController
 from flask import Flask, render_template, request, make_response, redirect
+from datetime import datetime, timedelta
 
 app = Flask(__name__, static_url_path='', static_folder='../view/static', template_folder='../view/')
 
@@ -105,3 +106,20 @@ def logout():
 		request.user.delete_session(request.user.token)
 		request.user = None
 	return resp
+
+@app.route('/hacerReserva')
+def reservar():
+	hoy = datetime.now().strftime('%Y-%m-%d')
+	manana = (datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')
+	limite = (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')
+	idLibro = request.values.get('idLibro')
+	libro = library.getBook(idLibro)
+	return render_template('hacerReserva.html', libro=libro, hoy=hoy, manana=manana, limite=limite)
+
+@app.route('/confirmarReserva', methods=['POST'])
+def confirmarReserva():
+	idLibro = request.values.get('idLibro')
+	fechaReserva = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+	fechaDevolucion = request.values.get('endDate')
+	library.guardarReserva(request.user.id, idLibro, fechaReserva, fechaDevolucion)
+	return redirect('/historial')
