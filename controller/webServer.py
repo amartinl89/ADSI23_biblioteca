@@ -114,7 +114,8 @@ def reservar():
 	limite = (datetime.now() + timedelta(days=30)).strftime('%Y-%m-%d')
 	idLibro = request.values.get('idLibro')
 	libro = library.getBook(idLibro)
-	return render_template('hacerReserva.html', libro=libro, hoy=hoy, manana=manana, limite=limite)
+	reservado = library.libroReservado(idLibro, hoy)
+	return render_template('hacerReserva.html', libro=libro, hoy=hoy, manana=manana, limite=limite, reservado=reservado)
 
 @app.route('/confirmarReserva', methods=['POST'])
 def confirmarReserva():

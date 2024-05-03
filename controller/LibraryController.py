@@ -71,6 +71,13 @@ class LibraryController:
             return historial
         else:
             return None
+        
+    def libroReservado(self,idLibro, fechaHoraReserva):
+        consulta = db.select("SELECT * FROM Reserva WHERE idLibro = ? AND fechaDevolucion  > ?", (idLibro, fechaHoraReserva,))
+        if len(consulta) > 0:
+            return True
+        else:
+            return False
     
     def cancelarReserva(self, idUsuario, idLibrom, fechaHoraReserva):
         raise NotImplemented("HACER")
