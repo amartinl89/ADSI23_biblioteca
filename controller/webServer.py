@@ -1,7 +1,6 @@
 from .LibraryController import LibraryController
 from flask import Flask, render_template, request, make_response, redirect
 from datetime import datetime, timedelta
-
 app = Flask(__name__, static_url_path='', static_folder='../view/static', template_folder='../view/')
 
 
@@ -45,6 +44,8 @@ def catalogue():
 
 @app.route('/historial')
 def historial():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
 	usuarioId = request.user.id
 	historial = library.getHistorial(usuarioId)
 	return render_template('historial.html', historial = historial)
@@ -124,3 +125,23 @@ def confirmarReserva():
 	fechaDevolucion = request.values.get('endDate')
 	library.guardarReserva(request.user.id, idLibro, fechaReserva, fechaDevolucion)
 	return redirect('/historial')
+
+@app.route('/register', methods=['POST'])
+def registrar():
+	email = request.values.get("email")
+	password = request.values.get("password")
+	name = request.values.get("name")
+	if library.estaUsuario(email):
+		return render_template('register.html',esta=True)
+	library.crearUsuario(name, email, password)
+	user = library.get_user(email, password)
+
+	session = user.new_session()
+	resp = redirect("/")
+	resp.set_cookie('token', session.hash)
+	resp.set_cookie('time', str(session.time))
+	return resp
+
+@app.route('/register', methods=['GET'])
+def register():
+	return render_template('register.html',esta=False)

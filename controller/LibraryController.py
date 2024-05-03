@@ -56,7 +56,14 @@ class LibraryController:
             return libro
         else:
             return None
-    
+    def crearUsuario(self, nombre, email, password):
+        db.insert("INSERT INTO User (name, email, password) VALUES (?, ?, ?)", (nombre, email, hash_password(password)))
+    def estaUsuario(self, email):
+        consulta = db.select("SELECT * FROM User WHERE email = ?", (email,))
+        if len(consulta) > 0:
+            return True
+        else:
+            return False
     #GESTOR RESERVAS
     def guardarReserva(self, idUsuario, idLibro, fechaHoraReserva, fechaDevolucion):
         db.insert("INSERT INTO Reserva (idUsuario, idLibro, fechaHoraReserva, fechaDevolucion) VALUES (?, ?, ?, ?)", (idUsuario, idLibro, fechaHoraReserva, fechaDevolucion))
