@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="reservaContainer">
     <h1>Reserva de Libro</h1>
     <div>
         <h2>{{ libro.title }}</h2>
@@ -9,7 +10,9 @@
         <p>{{ libro.description }}</p>
     </div>
     {%if reservado %}
+    <div id="reservado">
         <p><b>Este libro ya ha sido reservado por otro usuario.</b></p>
+    </div>
     {%else%}
     <form action="{{url_for('confirmarReserva')}}" method="post">
         <label for="startDate">Fecha de Inicio de Reserva:</label>
@@ -20,4 +23,5 @@
         <input type="submit" value="Confirmar Reserva">
     </form>
     {%endif%}
+</div>
 {% endblock %}

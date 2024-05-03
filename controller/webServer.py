@@ -145,3 +145,8 @@ def registrar():
 @app.route('/register', methods=['GET'])
 def register():
 	return render_template('register.html',esta=False)
+
+@app.route('/misamigos')
+def amigos():
+	amigos = library.getAmigos(request.user.id)
+	return render_template('amigos.html', amigos = amigos)

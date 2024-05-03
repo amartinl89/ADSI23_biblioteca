@@ -2335,3 +2335,129 @@
   overflow: visible;
   clip: auto;
 }
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Estilos para las filas impares */
+tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para los enlaces */
+a {
+  color: #007bff; /* Color azul para los enlaces */
+  text-decoration: none; /* Sin subrayado */
+}
+
+a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón */
+}
+
+/* Estilos para el formulario de reseña */
+#resenaForm {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+textarea, input[type="number"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+input[type="date"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* Estilos para el mensaje de reserva ya realizada */
+#reservado {
+  background-color: #ffcccc;
+  border: 1px solid #ff0000;
+  color: #ff0000;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+  text-align: center;
+}
+.reservaContainer {
+  max-width: 600px; /* Ancho máximo del contenido */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 20px; /* Espacio de relleno alrededor del contenido */
+  text-align: center; /* Alinear el texto al centro */
+}
+
+.reseña {
+  max-width: 600px; /* Ancho máximo del bloque */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 20px; /* Espacio de relleno alrededor del bloque */
+  background-color: #f9f9f9; /* Color de fondo */
+  border: 1px solid #ddd; /* Borde del bloque */
+  border-radius: 5px; /* Borde redondeado */
+}
+
+.reseña p {
+  margin-bottom: 10px; /* Margen inferior para los párrafos */
+}
+
+.reseña button {
+  background-color: #ddd; /* Color de fondo del botón */
+  color: white; /* Color del texto del botón */
+  padding: 10px 20px; /* Espaciado dentro del botón */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Borde redondeado */
+  cursor: pointer; /* Cursor al pasar por encima */
+  text-decoration: none; /* Sin subrayado */
+}
+
+.reseña button:hover {
+  background-color: #0056b3; /* Color de fondo del botón al pasar por encima */
+}
+
