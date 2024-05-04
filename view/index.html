@@ -3,5 +3,8 @@
 {% block content %}
 <div class="container p-5 my-5 border">
     <h1>TAP 2023/2024</h1>
+    {%if 'user' in request.__dict__ and request.user and request.user.token:%}
+        <h2>Bienvenido, {{request.user.username}}</h2>
+    {%endif%}
 </div>
 {% endblock %}
