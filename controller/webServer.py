@@ -52,6 +52,8 @@ def historial():
 	return render_template('historial.html', historial = historial, hoy=hoy)
 @app.route('/reseña')
 def resena():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
 	idLibro = request.values.get('idLibro')
 	titulo = request.values.get("titulo")
 	libro = {"titulo":titulo, "idLibro": idLibro}

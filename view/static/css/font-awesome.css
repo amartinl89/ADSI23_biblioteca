@@ -2490,4 +2490,47 @@ button[type="reservado"]:hover{
   text-align: center; /* Alinear el texto al centro */
 }
 
+footer{
+  background-color: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  position: relative; /* Posición absoluta */
+  bottom: 0; /* Pegado al fondo */
+  width: 100%;
+}
+
+#register {
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 0 auto; /* Centrar horizontalmente */
+  padding: 20px; /* Espaciado interno */
+  
+  border-radius: 8px; /* Borde redondeado */
+}
+
+#register label, 
+#register input[type="text"],
+#register input[type="email"],
+#register input[type="password"] {
+  display: block; /* Mostrar en una línea diferente */
+  margin-bottom: 10px; /* Margen inferior */
+}
+
+#register input[type="submit"] {
+  background-color: #007bff; /* Color de fondo */
+  color: #ffffff; /* Color del texto */
+  padding: 10px 20px; /* Espaciado interior */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Borde redondeado */
+  cursor: pointer; /* Cursor al pasar por encima */
+}
+
+#register input[type="submit"]:hover {
+  background-color: #0056b3; /* Color de fondo al pasar por encima */
+}
+
+#register form{
+  margin-top: 20px;
+}
 
