@@ -48,7 +48,8 @@ def historial():
 		return redirect('/login')
 	usuarioId = request.user.id
 	historial = library.getHistorial(usuarioId)
-	return render_template('historial.html', historial = historial)
+	hoy = datetime.now().strftime('%Y-%m-%d')
+	return render_template('historial.html', historial = historial, hoy=hoy)
 @app.route('/reseña')
 def resena():
 	idLibro = request.values.get('idLibro')
@@ -146,7 +147,10 @@ def registrar():
 def register():
 	return render_template('register.html',esta=False)
 
-@app.route('/misamigos')
-def amigos():
-	amigos = library.getAmigos(request.user.id)
-	return render_template('amigos.html', amigos = amigos)
+@app.route('/devlolverReserva', methods=['POST'])
+def devolverReserva():
+	idLibro = request.values.get('idLibro')
+	hoy = datetime.now().strftime('%Y-%m-%d')
+	fechaHoraReserva = request.values.get('fechaHoraReserva')
+	library.devolverReserva(request.user.id, idLibro, fechaHoraReserva ,hoy)
+	return redirect('/historial')

@@ -16,7 +16,7 @@
     {%else%}
     <form action="{{url_for('confirmarReserva')}}" method="post">
         <label for="startDate">Fecha de Inicio de Reserva:</label>
-        <input type="date" id="startDate" name="startDate" value="{{ hoy }}" min="{{ hoy }}" max="{{manana}}" required><br><br>
+        <input type="date" id="startDate" name="startDate" value="{{ hoy }}" min="{{ hoy }}" max="{{hoy}}" required><br><br>
         <label for="endDate">Fecha de Fin de Reserva:</label>
         <input type="date" id="endDate" name="endDate" min="{{ manana }}" max="{{ limite }}" required><br><br>
         <input type="hidden" name="idLibro" value="{{ libro.id }}">

@@ -86,8 +86,8 @@ class LibraryController:
         else:
             return False
     
-    def cancelarReserva(self, idUsuario, idLibrom, fechaHoraReserva):
-        raise NotImplemented("HACER")
+    def devolverReserva(self, idUsuario, idLibro, fechaHoraReserva, hoy):
+        db.update("UPDATE Reserva SET fechaDevolucion = ? WHERE idUsuario = ? AND idLibro = ? AND fechaHoraReserva = ?", (hoy, idUsuario, idLibro, fechaHoraReserva,))
     def buscarReservas(self, idUsuario):
         raise NotImplemented("HACER")
     
@@ -140,4 +140,10 @@ class LibraryController:
     
     def borrarUsuario(idUsuario):
         raise NotImplemented("HACER")
-    
+    def getAmigos(self, idUsuario):
+       consulta = db.select("SELECT u.* FROM User u, Amigos a WHERE u.id = a.idUsuario2 AND a.idUsuario1 = ?", (idUsuario,))
+       if len(consulta) > 0:
+           amigos = [User(u[0], u[1], u[2]) for u in consulta]
+           return amigos
+       else:
+           return None

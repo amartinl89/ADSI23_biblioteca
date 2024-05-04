@@ -2461,3 +2461,33 @@ input[type="submit"]:hover {
   background-color: #0056b3; /* Color de fondo del botón al pasar por encima */
 }
 
+button[type="reservado"] {
+  background-color: #e84545; /* Color de fondo */
+  border: 1px solid #ff0000; /* Borde */
+  color: #ffffff; /* Color del texto */
+  padding: 10px; /* Espaciado dentro del bloque */
+  /*margin-top: 20px; /* Margen superior */
+  border-radius: 4px; /* Borde redondeado */
+  text-align: center; /* Alinear el texto al centro */
+  
+}
+
+button[type="reservado"]:hover{
+  background-color: #fc0707; /* Color de fondo */
+  
+
+}
+
+#devuelto{
+  background-color: #00ff00; /* Color de fondo */
+  border: 1px solid #05cc05; /* Borde */
+  color: #0b9a21; /* Color del texto */
+  padding: 5px 5px; /* Espaciado dentro del bloque */; /* Espaciado dentro del bloque */
+  padding-left: 5px;
+  padding-right: 5px;
+  /*margin-top: 20px; /* Margen superior */
+  border-radius: 4px; /* Borde redondeado */
+  text-align: center; /* Alinear el texto al centro */
+}
+
+

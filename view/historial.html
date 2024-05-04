@@ -10,6 +10,7 @@
           <th>Titulo del Libro</th>
           <th>Fecha de Reserva</th>
           <th>Fecha de Devolución</th>
+          <th>Estado</th>
         </tr>
       </thead>
       <tbody>
@@ -18,6 +19,19 @@
             <td><a href="{{ url_for('resena', idLibro=reserva.idLibro, titulo=reserva.titulo) }}">{{ reserva.titulo }}</a></td>
             <td>{{ reserva.fechaHoraReserva }}</td>
             <td>{{ reserva.fechaDevolucion }}</td>
+            <td>
+              {% if reserva.fechaDevolucion > hoy %}
+              
+                <form action="{{ url_for('devolverReserva', idLibro=reserva.idLibro, fechaHoraReserva=reserva.fechaHoraReserva) }}" method="post">
+                  <button id="reservado" type="submit">Devolver libro</button>
+              </form>
+              
+                {% else %}
+                <div id="devuelto">
+                  <p>Devuelto</p>
+              </div>
+              {% endif %}
+          </td>
           </tr>
         {% endfor %}
       </tbody>
