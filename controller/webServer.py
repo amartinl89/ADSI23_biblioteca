@@ -160,3 +160,49 @@ def devolverReserva():
 	fechaHoraReserva = request.values.get('fechaHoraReserva')
 	library.devolverReserva(request.user.id, idLibro, fechaHoraReserva ,hoy)
 	return redirect('/historial')
+
+
+#Xabi
+def es_nombre_valido(nombre):
+    palabras_prohibidas = ["racista", "sexista"]
+    return all(palabra.lower() not in nombre.lower() for palabra in palabras_prohibidas)
+
+@app.route('/foros')
+def lista_foros():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
+	temas = library.get_temas()
+	return render_template('foros.html', temas=temas)
+
+temas = library.get_temas()
+@app.route('/nuevo_tema', methods=['GET', 'POST'])
+def nuevo_tema():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
+	temas = library.get_temas()  # Recupera la lista de temas existentes
+
+	if request.method == 'POST':
+		nombre = request.form.get('nombre')
+		if nombre and es_nombre_valido(nombre):
+			# Crea un nuevo tema utilizando el gestor de temas
+			library.crear_tema(nombre)
+			# Recupera la lista de temas después de crear uno nuevo
+			temas = library.get_temas()
+			# Después de crear el tema, redirige al usuario a la página de exploración de temas
+			return redirect('/explorar_temas')
+
+	return render_template('nuevoTema.html', temas=temas)
+
+@app.route('/explorar_temas')
+def explorar_temas():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
+	temas = library.get_temas()
+	return render_template('temas.html', temas=temas)
+
+@app.route('/temas/<int:id_tema>')
+def ver_hilos(id_tema):
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
+	hilos = library.get_hilos(id_tema)
+	return render_template('verHilo.html', hilos=hilos)

@@ -1,0 +1,16 @@
+<!-- explorar_temas.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container p-5 my-5 border">
+    <h1>Explorar Temas</h1>
+
+    <!-- Lista de temas existentes -->
+    <ul>
+        {% for tema in temas %}
+            <li>{{ tema.nombre }}</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endblock %}

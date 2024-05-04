@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>FOROS - Ver Hilos</h1>
+    <ul>
+        {% for hilo in hilos %}
+            <li>{{ hilo.texto }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

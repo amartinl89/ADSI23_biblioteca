@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Library</title>
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/font-awesome.css">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/font-awesome.css">
 
-    <script src="js/bootstrap.bundle.js"></script>
+    <script src="/js/bootstrap.bundle.js"></script>
   </head>
   <body>
     <div class="container">
@@ -23,6 +23,7 @@
           {% if 'user' in request.__dict__ and request.user and request.user.token: %}
           <li class="nav-item"><a href="/historial" class="nav-link {% if request.path == '/historial' %}active{% endif %}">Historial</a></li>
           <li class="nav-item"><span class="nav-link disabled">{{request.user.username}}</span></li>
+          <li class="nav-item"><a href="/foros" class="nav-link {% if request.path == '/foros' %}active{% endif %}">Foro</a></li>
           <li class="nav-item"><a href="/logout?path={{request.path}}" class="nav-link"><i class="fa fa-sign-out fa-lg"></i></a></li>
           {% else %}
           <li class="nav-item"><a href="/login" class="nav-link {% if request.path == '/login' %}active{% endif %}">Login</a></li>
