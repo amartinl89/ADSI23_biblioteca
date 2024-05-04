@@ -62,6 +62,8 @@ def resena():
 	return render_template('reseña.html', resena = resena, libro=libro)
 @app.route('/reseña', methods=['POST'])
 def guardarResena():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
 	idLibro = request.values.get('idLibro')
 	titulo = request.values.get("titulo")
 	nuevaPuntuacion = request.form.get('nuevaPuntuacion')
@@ -73,6 +75,8 @@ def guardarResena():
 	return render_template('historial.html', historial = historial)
 @app.route('/escribirReseña')
 def escribirResena():
+	if 'user' not in dir(request) or not request.user:
+		return redirect('/login')
 	idLibro = request.values.get('idLibro')
 	titulo = request.values.get("titulo")
 	libro = {"titulo":titulo, "idLibro": idLibro}
