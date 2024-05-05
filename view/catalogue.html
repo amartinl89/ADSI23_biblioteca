@@ -34,10 +34,12 @@
                         {% if book.description: %}
                         <p class="card-text">{{book.description}}</p>
                         {% endif %}
+                        <p>Puntuación = {{puntuaciones[book.id-1]}}</p>
                         {% if 'user' in request.__dict__ and request.user and request.user.token: %}
                         <a data-toggle="modal" href="{{url_for('reservar', idLibro=book.id )}}">
                             Reservar 
                         </a>
+                        
                         {% endif %}
                     </div>
                 </div>

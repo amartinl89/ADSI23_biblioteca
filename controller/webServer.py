@@ -39,8 +39,17 @@ def catalogue():
 	page = int(request.values.get("page", 1))
 	books, nb_books = library.search_books(title=title, author=author, page=page - 1)
 	total_pages = (nb_books // 6) + 1
+	todoBooks,nb_booksTodos = library.search_booksTodos(title=title, author=author)
+	puntuaciones = []
+	
+	for book in todoBooks:
+		puntuacion = library.getPuntuacion(book.id)
+		if puntuacion:
+			puntuaciones.append(puntuacion)
+		else:
+			puntuaciones.append(0)
 	return render_template('catalogue.html', books=books, title=title, author=author, current_page=page,
-	                       total_pages=total_pages, max=max, min=min)
+	                       total_pages=total_pages, max=max, min=min, puntuaciones=puntuaciones)
 
 @app.route('/historial')
 def historial():
@@ -72,7 +81,7 @@ def guardarResena():
 	else:
 		library.escribirReseña(idUsuario=request.user.id, idLibro=idLibro, reseña=request.form.get('nuevaResena'), punt=nuevaPuntuacion)
 	historial = library.getHistorial(idUsuario=request.user.id)
-	return render_template('historial.html', historial = historial)
+	return redirect('/historial')
 @app.route('/escribirReseña')
 def escribirResena():
 	if 'user' not in dir(request) or not request.user:
